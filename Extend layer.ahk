@@ -1,14 +1,18 @@
-﻿#Requires AutoHotkey v2.0
+#Requires AutoHotkey v2.0
 #SingleInstance Force
 
-
-
-<+8::Send "("
-<+9::Send ")"
-<+i::Send "["
-<+o::Send "]"
-<+k::Send "{{}"
-<+l::Send "{}}"
+1::`{
+2::[
+3::]
+4::}
+^{::Send "^1"
+^[::Send "^2"
+^]::Send "^3"
+^}::Send "^4"
+8::(
+9::)
++8::8
++9::9
 
 ; Capslockキー(F13)を押下しているときのマップ
 #HotIf GetKeyState("F13", "P")
@@ -19,7 +23,8 @@ q::Send "!{Tab}" ;ウィンドウの切り替え
 
 e::Send "#e" ;Win+EでExplorerを開く
 v::Send "#v" ;Win+Vでclipboardを開く
-c::Send "^#c" ;Wind+Ctrl+Cで画面フィルター(モノクロフィルター)をオン・オフする
+c::Send "^#c" ;Win+Ctrl+Cで画面フィルター(モノクロフィルター)をオン・オフする
+w::Send "#w" ;Win+mでalways on top
 g::Send "^z" ;Undo
 t::Send "^+z" ;Redo
 Space::Send "{vk1Dsc07B}" ;   IMEのオンオフ
@@ -28,8 +33,8 @@ Space::Send "{vk1Dsc07B}" ;   IMEのオンオフ
 ;   ナビゲーションキー
 i::Send "{Left}"
 k::Send "{Right}"
-l::Send "{Down}"
 o::Send "{Up}"
+l::Send "{Down}"
 h::Send "{Home}"
 j::Send "{End}"
 n::Send "{Backspace}"
@@ -37,7 +42,7 @@ m::Send "{Delete}"
 
 ;   修飾キーを作成
 f::Ctrl
-d::Shift
+d::RShift
 a::Alt
 
 ;   Ctrl+*
@@ -53,6 +58,8 @@ a::Alt
 +k::Send "+{Right}"
 +o::Send "+{Up}"
 +l::Send "+{Down}"
++h::Send "+{Home}"
++j::Send "+{End}"
 +n::Send "+{Backspace}"
 +m::Send "+{Delete}"
 
@@ -61,7 +68,6 @@ a::Alt
 ^+k::Send "^+{Right}"
 ^+o::Send "^+{Up}"
 ^+l::Send "^+{Down}"
-^+n::Send "^+{Backspace}"
 ^+m::Send "^+{Delete}"
 
 ;   Alt+*
@@ -72,12 +78,7 @@ a::Alt
 
 ; 右Altキー(F15)を押しているときのマップ
 #HotIf GetKeyState("F15", "P")
-
-
-
-; 左矢印キー(F16)を押しているときのマップ
-#HotIf GetKeyState("F16", "P")
-;q::Send "*"
+q::Send "%"
 w::Send "<"
 e::Send ">"
 r::Send "\"
@@ -97,6 +98,39 @@ b::Send "|"
 3::Send "{#}"
 4::Send "$"
 5::Send "%"
+
+
+; 左矢印キー(F16)を押しているときのマップ
+#HotIf GetKeyState("F16", "P")
+w::1
+e::2
+r::3
+s::4
+d::5
+f::6
+x::7
+c::8
+v::9
+a::0
+g::Send "{PgDn}"
+z::Send "{PgUp}"
+
+
+;   修飾キーを作成
+j::Ctrl
+;k::RShift
+;l::Alt
+
+^w::^1
+^e::^2
+^r::^3
+^s::^4
+^d::^5
+^f::^6
+^x::^7
+^c::^8
+^v::^9
+^a::^0
 
 ; 元Nキー(F17)を押しているときのマップ
 #HotIf GetKeyState("F17", "P")
