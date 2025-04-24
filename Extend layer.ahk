@@ -9,18 +9,24 @@
 ^[::Send "^2"
 ^]::Send "^3"
 ^}::Send "^4"
+; 6::Run "https://scrapbox.io/1685"
+; 7::Run "https://scrapbox.io/soundExplore/"
 8::(
 9::)
-+8::8
-+9::9
+; +8::8
+; +9::9
 
+
+; F17::Send "{vk1Dsc07B}" ;   IMEのオンオフ
+F17::Run "https://scrapbox.io/ork"
 
 ; Capslockキー(F13)を押下しているときのマップ
 #HotIf GetKeyState("F13", "P")
-q::Send "!{Tab}" ;ウィンドウの切り替え
+;q::Send "!{Tab}" ;ウィンドウの切り替え
 e::Send "{Enter}" ;左手でEnterキーを押したいとき
 f::Send "{vk1Dsc07B}" ;   IMEのオンオフ
 ; Winキー(F14)を押下しているときのマップ
+
 #HotIf GetKeyState("F14")
 
 e::Send "#e" ;Win+EでExplorerを開く
@@ -33,50 +39,29 @@ t::Send "^+z" ;Redo
 
 
 ;   ナビゲーションキー
-j::Send "{Left}"
-i::Send "{Up}"
-k::Send "{Down}"
-l::Send "{Right}"
 h::Send "{Home}"
 `;::Send "{End}"
-n::Send "{Backspace}"
-m::Send "{Delete}"
-
+u::Send "1"
+i::Send "2"
+o::Send "3"
+j::Send "4"
+k::Send "5"
+l::Send "6"
+m::Send "7"
+,::Send "8"
+.::Send "9"
+n::Send "0"
+; K::Send "("
+; l::Send ")"
+; i::Send "["
+; o::Send "]"
+; u::`{
+; p::}
 ;   修飾キーを作成
-f::Ctrl
-d::RShift
-a::Alt
+; f::Ctrl
+; d::RShift
+; a::Alt
 
-;   Ctrl+*
-^j::Send "^{Left}"
-^l::Send "^{Right}"
-^i::Send "^{Up}"
-^k::Send "^{Down}"
-^n::Send "^{Backspace}"
-^m::Send "^{Delete}"
-
-;   Shift+*
-+j::Send "+{Left}"
-+l::Send "+{Right}"
-+i::Send "+{Up}"
-+k::Send "+{Down}"
-+h::Send "+{Home}"
-+;::Send "+{End}"
-+n::Send "+{Backspace}"
-+m::Send "+{Delete}"
-
-;   Ctrl+Shift+*
-^+j::Send "^+{Left}"
-^+l::Send "^+{Right}"
-^+i::Send "^+{Up}"
-^+k::Send "^+{Down}"
-^+m::Send "^+{Delete}"
-
-;   Alt+*
-!j::Send "!{Left}"
-!l::Send "!{Right}"
-!i::Send "!{Up}"
-!k::Send "!{Down}"
 
 
 ; 右Altキー(F15)を押しているときのマップ
@@ -135,20 +120,6 @@ j::Ctrl
 ^v::^9
 ^a::^0
 
-; 元Nキー(F17)を押しているときのマップ
-#HotIf GetKeyState("F17", "P")
-1::Send "{F1}"
-2::Send "{F2}"
-3::Send "{F3}"
-4::Send "{F4}"
-5::Send "{F5}"
-6::Send "{F6}"
-7::Send "{F7}"
-8::Send "{F8}"
-9::Send "{F9}"
-0::Send "{F10}"
--::Send "{F11}"
-'::Send "{F12}"
 
 #HotIf
 
@@ -167,27 +138,27 @@ j::Ctrl
     KeyWait "3"
     Send "{F23}"
 }
+; 4::
+; {
+;     Send "e"
+;     Send "{Space}"
+;     KeyWait "4"
+;     Send "{Space}"
+; }
+
 4::
 {
-    Send "e"
-    Send "{Space}"
-    KeyWait "4"
-    Send "{Space}"
+   Send "^i"  ; Control + A (Command: A)
+   KeyWait "4"
+   Send "^o"  ; Control + B (Command: B)
 }
 
-;~R::
-;{
-;    Send "^i"  ; Control + A (Command: A)
-;    KeyWait "R"
-;    Send "^o"  ; Control + B (Command: B)
-;}
-
-;3::
-;{
+; 3::
+; {
 ;    Send "{F18}"
 ;    KeyWait "3"
 ;    Send "{F19}"
-;}
+; }
 
 
 ; ; 状態を追跡するための変数を初期化
@@ -233,7 +204,7 @@ BPMArray := [39, 43, 46, 53, 59, 66, 73, 81, 90, 100, 110, 120, 130, 140, 150, 1
 BPMNumber := 9
 
 SetTitleMatchMode 1
-#HotIf WinActive("Studio One - test ギター練習" && "Studio One - copy ギター練習")
+#HotIf WinActive("Studio One - test ギター練習" || "Studio One - copy ギター練習")
 
 
 ; ショートカットキーはお好きなキーに変更してください
