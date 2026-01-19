@@ -1,6 +1,7 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
 
+
 1::`{
 2::[
 3::]
@@ -18,7 +19,7 @@
 
 
 ; F17::Send "{vk1Dsc07B}" ;   IMEのオンオフ
-F17::Run "https://scrapbox.io/ork"
+; F17::Run "https://scrapbox.io/ork"
 
 ; Capslockキー(F13)を押下しているときのマップ
 #HotIf GetKeyState("F13", "P")
@@ -89,19 +90,19 @@ b::Send "|"
 
 
 ; 左矢印キー(F16)を押しているときのマップ
-#HotIf GetKeyState("F16", "P")
-w::1
-e::2
-r::3
-s::4
-d::5
-f::6
-x::7
-c::8
-v::9
-a::0
-g::Send "{PgDn}"
-z::Send "{PgUp}"
+; #HotIf GetKeyState("F16", "P")
+; w::1
+; e::2
+; r::3
+; s::4
+; d::5
+; f::6
+; x::7
+; c::8
+; v::9
+; a::0
+; g::Send "{PgDn}"
+; z::Send "{PgUp}"
 
 
 ;   修飾キーを作成
@@ -129,79 +130,20 @@ j::Ctrl
 ;    SendText TimeString
 ;    Return
 ;}
-#HotIf WinActive("ahk_exe Studio One.exe")
 
-
-~3::
-{
-    Send "{F22}"
-    KeyWait "3"
-    Send "{F23}"
-}
-; 4::
-; {
-;     Send "e"
-;     Send "{Space}"
-;     KeyWait "4"
-;     Send "{Space}"
-; }
-
-4::
-{
-   Send "^i"  ; Control + A (Command: A)
-   KeyWait "4"
-   Send "^o"  ; Control + B (Command: B)
-}
-
-; 3::
-; {
-;    Send "{F18}"
-;    KeyWait "3"
-;    Send "{F19}"
-; }
-
-
-; ; 状態を追跡するための変数を初期化
-; global toggle := 0
-
-; F13::
-; {
-;     global toggle
-;     if (toggle = 0) {
-;         Send "{F13}"
-;         toggle := 1
-;     } else {
-;         Send "{F14}"
-;         toggle := 0
-;     }
-;     KeyWait "F13"
-; }
-
-;^1::
-;{
-;    MouseGetPos &xpos, &ypos, &wnd
-;    ProcessName := WinGetProcessName %wnd%
-;    MsgBox ProcessName
-;}
-
-; Studio Oneの録音時に使うAHKScriptで、フットペダルを踏むと録音が始まる通常の機能に加えて、録音中に踏むと録音開始位置に戻るようにする（録音ボタンの色を取得して判定する）
-F18::
-{
-    if PixelSearch(&Px, &Py, 957, 956, 965, 966, 0xde4f4d, 50)
-    {
-        Send("8")
-    }
-    else
-    {
-        Send("9")
-    }
-    keyWait("F18", "U")
-}
 
 
 
 BPMArray := [39, 43, 46, 53, 59, 66, 73, 81, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240]
 BPMNumber := 9
+
+
+#HotIf WinActive("Studio One")
+; マウスによる拡大縮小を無効にする
+^+WheelUp::Send ""
+^+WheelDown::Send ""
+^WheelUp::Send ""
+^WheelDown::Send ""
 
 SetTitleMatchMode 1
 #HotIf WinActive("Studio One - test ギター練習" || "Studio One - copy ギター練習")
@@ -211,6 +153,7 @@ SetTitleMatchMode 1
 
 
 ; BPMを+10%にします
+F18::
 Delete::
 {
     global BPMNumber
@@ -229,6 +172,7 @@ Delete::
 }
 
 ; BPMを-10%にします。説明は省略します。上と同じです。
+F17::
 BackSpace::
 {
     global BPMNumber
@@ -279,3 +223,69 @@ SetTitleMatchMode 1
     }
 }
 
+
+#HotIf WinActive("ahk_exe Studio One.exe")
+
+F18:: ;フットペダル用のコマンド。録音操作のプログラム
+{
+    ; 録音を止めるのはボタンが赤いときで、録音を始めるときはボタンが赤くないとき
+    if (PixelGetColor('964', '960') = 0xf25654) {
+        Send("8") ;録音を止める。あらかじめStudio oneで8を"Transport - Stop"にアサインしておく
+    } else {
+        Send("9") ;録音を開始する。あらかじめStudio oneで9を"Transport - Record"にアサインしておく
+    }
+}
+
+~3::
+{
+    Send "{F22}"
+    KeyWait "3"
+    Send "{F23}"
+}
+; 4::
+; {
+;     Send "e"
+;     Send "{Space}"
+;     KeyWait "4"
+;     Send "{Space}"
+; }
+
+
+
+4:: ;Reference Start/Stop 押下中だけグローバルソロをオンして再生する　耳コピで使うやつ
+{
+   Send "^i"  ; Control + A (Command: A)
+   KeyWait "4"
+   Send "^o"  ; Control + B (Command: B)
+}
+
+; 3::
+; {
+;    Send "{F18}"
+;    KeyWait "3"
+;    Send "{F19}"
+; }Pixel
+
+
+; ; 状態を追跡するための変数を初期化
+; global toggle := 0
+
+; F13::
+; {
+;     global toggle
+;     if (toggle = 0) {
+;         Send "{F13}"
+;         toggle := 1
+;     } else {
+;         Send "{F14}"
+;         toggle := 0
+;     }
+;     KeyWait "F13"
+; }
+
+;^1::
+;{
+;    MouseGetPos &xpos, &ypos, &wnd
+;    ProcessName := WinGetProcessName %wnd%
+;    MsgBox ProcessName
+;}
